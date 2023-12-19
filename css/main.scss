@@ -9,9 +9,15 @@
     justify-content: center;
     flex-direction: column;
 }
-
+a{
+    text-decoration: none;
+}
 .btn{
     background-color: #B3C164;
+    border: none;
+}
+.btn:hover{
+    background-color: #99a555;
     border: none;
 }
 .btns{
@@ -22,7 +28,7 @@
 
 h1{
     color: #B3C164;
-    font-size: 30px;
+    font-size: 50px;
     font-weight: 300;
     line-height: 36px;
     letter-spacing: 0em;
@@ -35,6 +41,14 @@ h2 {
     line-height: 42px;
     letter-spacing: 0em;
     color: white;
+}
+h3 {
+    color: #B3C164;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
 }
 
 p{
@@ -93,6 +107,11 @@ body{
             width: 600px;
             margin-right: 20%;
         }
+        h3{
+            display: flex;
+            width: 600px;
+            margin-right: 20%;
+        }
         p{
             display: flex;
             width: 600px;
@@ -101,8 +120,8 @@ body{
     }
     // offert area
     #offert{
-        background-color: #DAD7CD;
-        height: 80vh;
+        background-color: #EDE9DD;
+        height: 75vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -118,10 +137,7 @@ body{
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0px 1px black, 
-                            0 0px black, 
-                            0 0px black, 
-                            0 0px black;
+                box-shadow: -1px 0px 10px rgba(110, 110, 110, 0.438);
                 #overlayOnline {
                     position: absolute;
                     align-items: center;
@@ -138,9 +154,37 @@ body{
                         ;
                     }
                 }
+                // overlay for hover
+                #overlayEffectOnline {
+                    position: absolute;
+                    background: #B3C164;
+                    overflow: hidden;
+                    transition: all 0.5s ease-in-out;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    h2{
+                        text-transform: uppercase;
+                        font-weight: 400;
+                        color: white; 
+                    }
+                }
+                // hover
+                #overlayEffectOnline:hover {
+                    opacity: 0.7;
+                }
             }
             p{
-                text-transform: uppercase;
+                // text-transform: uppercase;
+                text-decoration: none;
+                transition: transform 0.5s ease; /* Transition effect for transform */
+            }
+            p:hover{
+                transform: translate(0, -7px);
             }
         }
         #personaltraining{
@@ -154,6 +198,7 @@ body{
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                box-shadow: -1px 0px 10px rgba(110, 110, 110, 0.438);
                 #overlayPersonal {
                     position: absolute;
                     align-items: center;
@@ -165,10 +210,43 @@ body{
                         color: #B3C164; 
                     }
                 }
+                // overlay for hover
+                #overlayEffectPersonal {
+                    position: absolute;
+                    background: #B3C164;
+                    overflow: hidden;
+                    transition: all 0.5s ease-in-out;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    h2{
+                        text-transform: uppercase;
+                        font-weight: 400;
+                        color: white; 
+                    }
+                }
+                // hover
+                #overlayEffectPersonal:hover {
+                    opacity: 0.7;
+                }
             }
             p{
-                text-transform: uppercase;
+                // text-transform: uppercase;
+                transition: transform 0.5s ease; /* Transition effect for transform */
             }
+            p:hover{
+                transform: translate(0, -7px);
+            }
+        }
+        // button
+        #buttonCons{
+            width: 50vh;
+            font-size: 15px;
+            text-transform: uppercase;
         }
     }
 }

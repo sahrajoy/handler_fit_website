@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap");
 .navbar {
   padding: 0;
   background-color: white;
@@ -8,7 +9,8 @@
 .navbar .container-fluid .navbar-brand #logo {
   height: 15vh;
 }
-.navbar .container-fluid #navbarSupportedContent .navbar-nav .nav-item #green {
+.navbar #green {
+  text-transform: uppercase;
   font-weight: 500;
   color: #B3C164;
 }/*# sourceMappingURL=navbar_styles.css.map */

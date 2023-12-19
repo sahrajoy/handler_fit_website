@@ -1,73 +1,39 @@
-@use 'variables';
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
 
 #footer {
-    height: 50px;
+    background-color: #EDE9DD;
+    height: 15vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin: 5% 5%;
-    a {
-        text-decoration: none;
-        color: black;
+    flex-direction: column;
+    #blank{
+        background-color: #374525;
+    }
+    #content{
+        #left{
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+        #middle{
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+        #right{
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+    }
+    #copyright{
+        background-color: white;
     }
 }
 
-/* contact button */
-#contact-button {
-    width: 120px;
-    border: #B3C164;
-    background-color: #B3C164;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    border-radius: 4px;
-}
-#contact {
-    color: white;
-}
 
-/* symbols bar */
-#symbols {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    margin-top: 5px;
-}
-#symbols div {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 3px;
-}
-#symbols div a {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-/* language drop-down */
-#language {
-    height: 30px;
-    font-size: 17px;
-    border: 0px;
-    border-radius: 4px;
-    margin: 2px;
-}
-
-#copyright {
-    background-color: #374525;
-    display: flex;
-    width: 100vw;
-}
-
-#copyright p {
-    color: white;
-    font-size: small;
-    margin-left: auto;
-    margin-right: 3%;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 

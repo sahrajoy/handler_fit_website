@@ -40,10 +40,11 @@ echo "
           <a class='nav-link' href='{$loc}contact.php'>Contact</a>
         </li>
         <li class='nav-item'>
-          <a class='nav-link' id='green' href='#'>Get in touch</a>
+          <a class='nav-link' id='green' href='#'>GET IN TOUCH</a>
         </li>
         <li class='nav-item'>
-          <a class='nav-link' href='https://www.instagram.com/handler_fit/'>&#xf16d;</a>
+        
+        <a class='nav-link' href='https://www.instagram.com/handler_fit/'><i class='fa fa-instagram' style='font-size:30px'></i></a>
         </li>
       </ul>
     </div>

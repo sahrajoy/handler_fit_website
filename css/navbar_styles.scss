@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
+
 .navbar {
     padding: 0;
     background-color: white;
@@ -8,24 +10,25 @@
                 height: 15vh;
             }
         }
-        .navbar-toggler{
+        // .navbar-toggler{
 
-        }
+        // }
 
-        #navbarSupportedContent{
-            .navbar-nav{
-                .nav-item{
-                    .nav-link{
+        // #navbarSupportedContent{
+        //     .navbar-nav{
+        //         .nav-item{
+        //             .nav-link{
 
                     }
                     #green{
+                        text-transform: uppercase;
                         font-weight: 500;
                         color: #B3C164;
                     }
-                }
+                // }
 
-            }
+    //         }
         
-        }
-    }
+    //     }
+    // }
 }
