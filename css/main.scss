@@ -1,0 +1,177 @@
+// imports
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
+
+// global styles
+.container{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btn{
+    background-color: #B3C164;
+    border: none;
+}
+.btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    color: #B3C164;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+h2 {
+    margin: 20px;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 42px;
+    letter-spacing: 0em;
+    color: white;
+}
+
+p{
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left; 
+    color: black;
+}
+
+body{
+    font-family: 'Rubik';
+    background-color: white;
+    // hero area 
+    #hero {
+        height: 500px;
+        background-image: url("../assets/images/klimmzugstange.png");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        #overlay {
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .btns{
+                .btn{
+                    text-transform: uppercase;
+                    padding: 5px 20px;
+                    margin: 0 20px;
+                    border-radius: 4px;
+                    color: white;
+                    font-weight: 100;
+                }
+            }
+        }
+    }
+    // about area
+    #about{
+        background-image: url("../assets/images/about-pic.png");
+        background-size: contain;
+        background-position: bottom;
+        background-repeat: no-repeat;
+        
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        h1{
+            display: flex;
+            width: 600px;
+            margin-right: 20%;
+        }
+        p{
+            display: flex;
+            width: 600px;
+            margin-right: 20%;
+        }
+    }
+    // offert area
+    #offert{
+        background-color: #DAD7CD;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        #onlinecoaching{
+            height: 50vh;
+            .imgOnline{
+                background-image: url("../assets/images/imgOnline.png");
+                background-size: cover;
+                background-position: center;
+                height: 30vh;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0px 1px black, 
+                            0 0px black, 
+                            0 0px black, 
+                            0 0px black;
+                #overlayOnline {
+                    position: absolute;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    h2{
+                        text-transform: uppercase;
+                        font-weight: 400;
+                        color: #B3C164; 
+                        text-shadow:    0px 1px #9ca855, 
+                                        0 1px #9ca855, 
+                                        0 1px #9ca855, 
+                                        0 1px #9ca855;
+                        ;
+                    }
+                }
+            }
+            p{
+                text-transform: uppercase;
+            }
+        }
+        #personaltraining{
+            height: 50vh;
+            .imgPersonal{
+                background-image: url("../assets/images/imgPersonal.png");
+                background-size: cover;
+                background-position: bottom;
+                height: 30vh;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                #overlayPersonal {
+                    position: absolute;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    h2{
+                        text-transform: uppercase;
+                        font-weight: 400;
+                        color: #B3C164; 
+                    }
+                }
+            }
+            p{
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+
+  

@@ -1,0 +1,31 @@
+.navbar {
+    padding: 0;
+    background-color: white;
+    .container-fluid{
+        background-color: white;
+        .navbar-brand{
+            #logo{
+                height: 15vh;
+            }
+        }
+        .navbar-toggler{
+
+        }
+
+        #navbarSupportedContent{
+            .navbar-nav{
+                .nav-item{
+                    .nav-link{
+
+                    }
+                    #green{
+                        font-weight: 500;
+                        color: #B3C164;
+                    }
+                }
+
+            }
+        
+        }
+    }
+}
