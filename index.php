@@ -1,102 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- css -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/footer_style.css">
-    <link rel="stylesheet" href="css/navbar_styles.css">
-    <!-- icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Email Icon -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Instagram Icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<?php
+require_once 'lib/bootstrap.php';
+require_once 'components/sections.php';
 
-</head>
-<body>
-    <!-- navbar -->
-    <?php
-    $loc = "";
-    require_once "components/navbar.php"; ?>
-    
-    <!-- hero section -->
-    <div id="hero">
-        <div class="text-center" id="overlay">
-            <h2>"Dein Weg zu einem fitteren Leben <br>
-            – mit einem persönlichen Fitness Trainer der Dich <br>
-            motiviert und unterstützt!"</h2>
-            <div class="btns">
-                <div class="btn btn-primary" id="online">Online coaching</div>
-                <div class="btn btn-primary" id="personal">Personal Training</div>
+$loc = '';
+$page = 'home';
+$title = null;
+
+$offers = [
+    [
+        'title' => 'Online Coaching',
+        'href' => 'onlinecoaching.php',
+        'image' => 'imgOnline.png',
+        'text' => 'Flexibel trainieren, wann und wo du willst, mit Plan, Betreuung und regelmäßigem Feedback.',
+        'links' => [
+            'onlinecoaching.php#abnehm-coaching' => 'Abnehm-Coaching',
+            'onlinecoaching.php#fitness-ernaehrungstipps' => 'Fitness- & Ernährungstipps',
+            'onlinecoaching.php#trainingsplaene' => 'Trainingspläne',
+        ],
+    ],
+    [
+        'title' => 'Personal Training',
+        'href' => 'personaltraining.php',
+        'image' => 'imgPersonal.png',
+        'text' => 'Eins-zu-eins-Training mit voller Aufmerksamkeit für deine Technik, deine Ziele und deinen Fortschritt.',
+        'links' => [
+            'personaltraining.php#hypertrophie' => 'Hypertrophie (Muskelaufbau)',
+            'personaltraining.php#krafttraining' => 'Krafttraining',
+            'personaltraining.php#bauch-beine-po' => 'Bauch-Beine-Po Workout',
+        ],
+    ],
+];
+
+$steps = [
+    ['icon' => 'noun-fitness-5568533.png', 'title' => '1. Erstgespräch', 'text' => 'Wir lernen uns kostenlos kennen, sprechen über deine Ziele, deinen Alltag und deine Erfahrung.'],
+    ['icon' => 'noun-weight-5817075.png', 'title' => '2. Analyse & Plan', 'text' => 'Ich erstelle dir einen Plan, der zu dir passt, Training und Ernährung, realistisch und machbar.'],
+    ['icon' => 'noun-fitness-4874119.png', 'title' => '3. Gemeinsam ans Ziel', 'text' => 'Wir trainieren, messen Fortschritte und passen den Plan laufend an, bis du dein Ziel erreichst.'],
+];
+
+$nextTrainings = upcoming_trainings(3);
+
+require 'components/head.php';
+?>
+
+<!-- Hero -->
+<section id="hero">
+    <div class="hero-overlay">
+        <div class="container text-center">
+            <h1 class="hero-title">Dein Weg zu einem fitteren Leben</h1>
+            <p class="hero-sub">mit einem persönlichen Fitness-Trainer, der dich motiviert und unterstützt!</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                <a class="btn btn-primary btn-lg" href="onlinecoaching.php">Online Coaching</a>
+                <a class="btn btn-primary btn-lg" href="personaltraining.php">Personal Training</a>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- about section -->
-    <div class="text-center" id="about">
-        <h1 class="offset-2">Welcome,</h1>
-        <h3 class="offset-2">in my world of passionate training!</h3>
-        <p class="offset-2" >"Welcome to my fascinating world of passionate training! <br>
-        As an experienced fitness trainer, I accompany you on your  <br>
-        fitness journey, including tailor-made training methods, <br>
-        professional instructions and unlimited motivation. <br>
-        Discover your body's full potential and achieve <br>
-        your individual goals. Are you ready to <br>
-        experience the change? Let's get started together!"</p>
+<!-- Willkommen -->
+<section id="welcome">
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-lg-7 py-5">
+                <span class="kicker">Willkommen</span>
+                <h2 class="display-title">in meiner Welt des leidenschaftlichen Trainings!</h2>
+                <p>Als erfahrener Fitness-Trainer begleite ich dich auf deiner Fitnessreise, mit maßgeschneiderten
+                    Trainingsmethoden, professioneller Anleitung und grenzenloser Motivation.</p>
+                <p>Entdecke das volle Potenzial deines Körpers und erreiche deine ganz persönlichen Ziele.
+                    Bist du bereit für die Veränderung? Lass uns gemeinsam starten!</p>
+                <a class="link-arrow" href="about.php">Mehr über mich <?= icon('arrow', 18) ?></a>
+            </div>
+            <div class="col-lg-5 welcome-image">
+                <img src="assets/images/about-pic.png" alt="Dein Trainer">
+            </div>
+        </div>
     </div>
+</section>
 
-    <!-- offert section -->
-    <div class="row m-0" id="offert">
-        <div class="col-md-5 m-4" id="onlinecoaching">
-            <a href="onlinecoaching.php">
-                <div class="imgOnline">
-                    <div class="text-center" id="overlayOnline">
-                        <h2>Online Coaching</h2>
-                    </div>
-                    <div id="overlayEffectOnline">
-                        <h2>Online Coaching</h2>
+<!-- Angebot -->
+<section id="offert">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="kicker">Mein Angebot</span>
+            <h2>Wie möchtest du trainieren?</h2>
+        </div>
+        <div class="row g-4">
+            <?php foreach ($offers as $offer): ?>
+                <div class="col-md-6">
+                    <div class="offer-card">
+                        <a class="offer-image" href="<?= $offer['href'] ?>" style="background-image: url('assets/images/<?= $offer['image'] ?>')">
+                            <span class="offer-title"><?= e($offer['title']) ?></span>
+                            <span class="offer-hover"><?= e($offer['title']) ?></span>
+                        </a>
+                        <div class="offer-body">
+                            <p><?= e($offer['text']) ?></p>
+                            <ul class="offer-links">
+                                <?php foreach ($offer['links'] as $href => $label): ?>
+                                    <li><a href="<?= $href ?>"><?= e($label) ?> <?= icon('arrow', 16) ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </a>
-            <div class="d-flex flex-column align-items-center justify-content-center pt-5">
-                <a href="online_coaching/online_coaching.php"><p class="p-2">Weight-loss coaching</p></a>
-                <a href="online_coaching/fitness_nutrition_tips.php"><p class="p-2">Fitness & Nutrition Tips</p></a>
-                <a href="online_coaching/training_plans.php"><p class="p-2">Trainingplans</p></a>
-            </div>
+            <?php endforeach; ?>
         </div>
-        <div class="col-md-5 m-4" id="personaltraining">
-            <a href="personaltraining.php">
-                <div class="imgPersonal">
-                    <div class="text-center" id="overlayPersonal">
-                        <h2>Personal Training</h2>
-                    </div>
-                    <div id="overlayEffectPersonal">
-                        <h2 class="headerHover">Personal Training</h2>
+        <div class="text-center mt-5">
+            <a class="btn btn-primary btn-lg px-5" href="contact.php?anliegen=erstgespraech">Hol dir dein kostenloses Erstgespräch</a>
+        </div>
+    </div>
+</section>
+
+<!-- So funktioniert's -->
+<section class="py-5 my-lg-4">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="kicker">So funktioniert's</span>
+            <h2>In drei Schritten zu deinem Ziel</h2>
+        </div>
+        <div class="row g-4 text-center">
+            <?php foreach ($steps as $step): ?>
+                <div class="col-md-4">
+                    <div class="step">
+                        <?= noun_icon($loc, $step['icon']) ?>
+                        <h3><?= e($step['title']) ?></h3>
+                        <p><?= e($step['text']) ?></p>
                     </div>
                 </div>
-            </a>
-            <div class="d-flex flex-column align-items-center justify-content-center pt-5">
-                <a href="personal_training/hypertrophy.php"><p class="p-2">Hypertrophy (Muscle Building)</p></a>
-                <a href="personal_training/strength_training.php"><p class="p-2">Strength Training</p></a>
-                <a href="personal_training/belly-butt-thigh.php"><p class="p-2">Belly-Butt-Thigh Workout</p></a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<?php if ($nextTrainings): ?>
+    <!-- Nächste Termine -->
+    <section class="py-5 bg-sand">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-4">
+                <div>
+                    <span class="kicker">Termine</span>
+                    <h2 class="mb-0">Nächste Trainings</h2>
+                </div>
+                <a class="link-arrow" href="booking.php">Alle Termine <?= icon('arrow', 18) ?></a>
+            </div>
+            <div class="row g-4">
+                <?php foreach ($nextTrainings as $t): ?>
+                    <div class="col-md-4">
+                        <?php require 'components/training_card.php'; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
-        <a class="btn btn-primary py-2 mb-5" id="buttonCons">get your free initial consultation</a>
-    </div>
+    </section>
+<?php endif; ?>
 
-    <!-- footer -->
-    <?php
-    $loc = "";
-    require_once "components/footer.php"; ?>
+<?php cta_band($loc, 'Bereit für die Veränderung?', 'Lass uns in einem unverbindlichen Gespräch herausfinden, wie ich dich am besten unterstützen kann.'); ?>
 
-    <!-- bootstrap js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- icons -->
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-</body>
-</html>
+<?php require 'components/footer.php'; ?>

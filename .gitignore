@@ -1,0 +1,9 @@
+# lokale Konfiguration (Passwörter, SMTP-Zugang)
+config.php
+
+# Datenbank und Mail-Log
+db/*.sqlite
+db/*.log
+
+/vendor/
+.idea/

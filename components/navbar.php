@@ -1,53 +1,74 @@
 <?php
+// Hauptmenü. Die Unterpunkte springen zu den Abschnitten der jeweiligen Seite.
 
-echo "
-<nav class='navbar navbar-expand-lg bg-body-tertiary'>
-  <div class='container-fluid'>
-    <a class='navbar-brand' href='{$loc}index.php'>
-      <img src='{$loc}assets/images/handler.png' id='logo'>
-    </a>
-    <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-      <span class='navbar-toggler-icon'></span>
-    </button>
-    <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-      <ul class='navbar-nav me-auto mb-2 mb-lg-0'>
-        <li class='nav-item dropdown'>
-            <a class='nav-link dropdown-toggle' href='{$loc}onlinecoaching.php' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-            Online Coaching
-            </a>
-            <ul class='dropdown-menu'>
-            <li><a class='dropdown-item' href='{$loc}online_coaching/whats_online.php'>what's online-coaching?</a></li>
-            <li><a class='dropdown-item' href='{$loc}online_coaching/weight_loss_coaching.php'>weight loss coaching</a></li>
-            <li><a class='dropdown-item' href='{$loc}online_coaching/fitness_nutrition_tips.php'>fitness & nutrition tips</a></li>
-            <li><a class='dropdown-item' href='{$loc}online_coaching/training_plans.php'>training plans</a></li>
+$menu = [
+    'online' => [
+        'label' => 'Online Coaching',
+        'href' => 'onlinecoaching.php',
+        'children' => [
+            'onlinecoaching.php#was-ist-online-coaching' => 'Was ist Online Coaching?',
+            'onlinecoaching.php#abnehm-coaching' => 'Abnehm-Coaching',
+            'onlinecoaching.php#fitness-ernaehrungstipps' => 'Fitness- & Ernährungstipps',
+            'onlinecoaching.php#trainingsplaene' => 'Trainingspläne',
+        ],
+    ],
+    'personal' => [
+        'label' => 'Personal Training',
+        'href' => 'personaltraining.php',
+        'children' => [
+            'personaltraining.php#was-ist-personal-training' => 'Was ist Personal Training?',
+            'personaltraining.php#hypertrophie' => 'Hypertrophie (Muskelaufbau)',
+            'personaltraining.php#krafttraining' => 'Krafttraining',
+            'personaltraining.php#bauch-beine-po' => 'Bauch-Beine-Po Workout',
+        ],
+    ],
+    'booking' => ['label' => 'Termine', 'href' => 'booking.php'],
+    'about' => ['label' => 'Über mich', 'href' => 'about.php'],
+];
+$page ??= '';
+?>
+<nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="<?= $loc ?>index.php">
+            <img src="<?= $loc ?>assets/images/handler.png" alt="Handler Personal Trainer" id="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Menü öffnen">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <?php foreach ($menu as $key => $item):
+                    $active = $page === $key ? ' active' : '';
+                    $current = $page === $key ? ' aria-current="page"' : '';
+                    if (isset($item['children'])): ?>
+                        <li class="nav-item dropdown">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a class="nav-link<?= $active ?>"<?= $current ?> href="<?= $loc . $item['href'] ?>"><?= e($item['label']) ?></a>
+                                <button type="button" class="nav-link dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Untermenü <?= e($item['label']) ?></span>
+                                </button>
+                            </div>
+                            <ul class="dropdown-menu">
+                                <?php foreach ($item['children'] as $href => $label): ?>
+                                    <li><a class="dropdown-item" href="<?= $loc . $href ?>"><?= e($label) ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link<?= $active ?>"<?= $current ?> href="<?= $loc . $item['href'] ?>"><?= e($item['label']) ?></a>
+                        </li>
+                    <?php endif;
+                endforeach; ?>
+                <li class="nav-item ms-lg-2">
+                    <a class="btn btn-primary btn-sm px-3" href="<?= $loc ?>contact.php?anliegen=erstgespraech">Get in touch</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="https://www.instagram.com/handler_fit/" target="_blank" rel="noopener" aria-label="Instagram"><?= icon('instagram', 24) ?></a>
+                </li>
             </ul>
-        </li>
-        <li class='nav-item dropdown'>
-            <a class='nav-link dropdown-toggle' href='{$loc}personal_training.php' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-            Personal Training
-            </a>
-            <ul class='dropdown-menu'>
-                <li><a class='dropdown-item' href='{$loc}personal_training/whats_personal.php'>what's personal training?</a></li>
-                <li><a class='dropdown-item' href='{$loc}personal_training/hypertrophy.php'>Hypertrophy (muscle building)</a></li>
-                <li><a class='dropdown-item' href='{$loc}personal_training/strength_training.php'>Strength training</a></li>
-                <li><a class='dropdown-item' href='{$loc}personal_training/belly-butt-thigh.php'>Belly-butt-thigh Workout</a></li>
-            </ul>
-        </li>
-        <li class='nav-item'>
-          <a class='nav-link' href='{$loc}about.php'>About</a>
-        </li>
-        <li class='nav-item'>
-          <a class='nav-link' href='{$loc}contact.php'>Contact</a>
-        </li>
-        <li class='nav-item'>
-          <a class='nav-link' id='green' href='#'>GET IN TOUCH</a>
-        </li>
-        <li class='nav-item'>
-        
-        <a class='nav-link' href='https://www.instagram.com/handler_fit/'><i class='fa fa-instagram' style='font-size:30px'></i></a>
-        </li>
-      </ul>
+        </div>
     </div>
-  </div>
 </nav>
-";
