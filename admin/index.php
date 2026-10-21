@@ -17,13 +17,16 @@ if ($action === 'login') {
         sleep(2);
     }
     $hash = config('admin_password_hash');
-    if (csrf_valid() && $hash && password_verify((string)($_POST['password'] ?? ''), $hash)) {
+    $plain = config('admin_password');
+    $input = (string)($_POST['password'] ?? '');
+    $valid = ($hash && password_verify($input, $hash)) || ($plain && hash_equals($plain, $input));
+    if (csrf_valid() && $valid) {
         session_regenerate_id(true);
         $_SESSION['is_admin'] = true;
         $_SESSION['login_attempts'] = 0;
         redirect('index.php');
     }
-    flash('danger', $hash ? 'Falsches Passwort.' : 'In config.php ist noch kein Admin-Passwort hinterlegt.');
+    flash('danger', $hash || $plain ? 'Falsches Passwort.' : 'Es ist noch kein Admin-Passwort hinterlegt.');
     redirect('index.php');
 }
 
@@ -91,6 +94,13 @@ if ($isAdmin && $action === 'save_training') {
     }
 }
 
+if ($isAdmin && $action === 'reset_demo' && is_demo()) {
+    db()->exec('DELETE FROM bookings; DELETE FROM trainings; DELETE FROM demo_mails;');
+    seed_demo_trainings(db());
+    flash('success', 'Demo wurde zurückgesetzt.');
+    redirect('index.php');
+}
+
 if ($isAdmin && $action === 'cancel_training') {
     cancel_training((int)($_POST['id'] ?? 0));
     flash('success', 'Training abgesagt und gelöscht. Alle Angemeldeten wurden per E-Mail informiert.');
@@ -135,6 +145,11 @@ require '../components/head.php';
         <?php if (!$isAdmin): ?>
             <div class="mx-auto" style="max-width: 420px">
                 <h1 class="h2 mb-4">Admin-Login</h1>
+                <?php if (is_demo() && config('admin_password')): ?>
+                    <div class="alert alert-info">
+                        <strong>Demo-Zugang:</strong> Passwort <code><?= e(config('admin_password')) ?></code>
+                    </div>
+                <?php endif; ?>
                 <?= render_flash() ?>
                 <form method="post" class="card-form">
                     <?= csrf_field() ?>
@@ -303,6 +318,33 @@ require '../components/head.php';
                                 <?php endforeach; ?>
                             </ul>
                         </details>
+                    <?php endif; ?>
+
+                    <?php if (is_demo()):
+                        $mails = db()->query('SELECT * FROM demo_mails ORDER BY id DESC LIMIT 50')->fetchAll(); ?>
+                        <div class="demo-mails mt-5" id="demo-mails">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                <h2 class="h4 mb-0">Versendete E-Mails (Demo)</h2>
+                                <form method="post" onsubmit="return confirm('Alle Termine, Anmeldungen und E-Mails löschen und die Beispieltermine neu anlegen?')">
+                                    <?= csrf_field() ?>
+                                    <button class="btn btn-outline-secondary btn-sm" name="action" value="reset_demo">Demo zurücksetzen</button>
+                                </form>
+                            </div>
+                            <p class="small text-muted">Im Demo-Modus werden keine echten E-Mails verschickt. Hier siehst du, was Betreiber und Kunden
+                                bekommen hätten. Die Links darin (z. B. „Anmeldung bestätigen“) funktionieren.</p>
+                            <?php if (!$mails): ?>
+                                <p class="text-muted">Noch keine E-Mails. Melde dich z. B. unter <a href="../booking.php">Termine</a> für ein Training an.</p>
+                            <?php endif; ?>
+                            <?php foreach ($mails as $m): ?>
+                                <details class="demo-mail">
+                                    <summary>
+                                        <span class="small text-muted"><?= e(date('d.m. H:i', strtotime($m['created_at']))) ?> · an <?= e($m['recipient']) ?></span><br>
+                                        <strong><?= e($m['subject']) ?></strong>
+                                    </summary>
+                                    <div class="demo-mail-body"><?= preg_replace('~(https?://[^\s<]+)~', '<a href="$1">$1</a>', nl2br(e($m['body']))) ?></div>
+                                </details>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

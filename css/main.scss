@@ -645,6 +645,36 @@ section[id] {
     border-left: 4px solid $green-olivine;
 }
 
+.demo-banner {
+    background-color: $green-army;
+    color: white;
+    text-align: center;
+    font-size: .9rem;
+    padding: .45rem 1rem;
+
+    a {
+        color: $green-olivine;
+        text-decoration: underline;
+    }
+}
+
+.demo-mail {
+    background: white;
+    margin-bottom: .6rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+
+    summary {
+        padding: .8rem 1rem;
+        cursor: pointer;
+    }
+
+    .demo-mail-body {
+        padding: 0 1rem 1rem;
+        font-size: .92rem;
+        word-break: break-word;
+    }
+}
+
 .legal {
     h2 {
         margin-top: 2rem;

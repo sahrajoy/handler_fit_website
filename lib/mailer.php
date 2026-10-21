@@ -7,6 +7,12 @@ function send_mail(string $to, string $subject, string $body, ?string $replyTo =
 {
     $transport = config('mail.transport');
 
+    if (is_demo()) {
+        db()->prepare('INSERT INTO demo_mails (recipient, subject, body, created_at) VALUES (?, ?, ?, ?)')
+            ->execute([$to, $subject, $body, date('Y-m-d H:i:s')]);
+        return true;
+    }
+
     if ($transport === 'log') {
         $entry = str_repeat('=', 70) . "\n"
             . 'Datum:    ' . date('Y-m-d H:i:s') . "\n"

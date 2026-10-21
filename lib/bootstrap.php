@@ -1,12 +1,9 @@
 <?php
 // Wird von jeder Seite als Erstes eingebunden: Konfiguration, Session, Datenbank und Hilfsfunktionen.
 
+// Ohne config.php (z. B. auf Render) kommen die Einstellungen über Umgebungsvariablen aus der Vorlage
 $configFile = __DIR__ . '/../config.php';
-if (!file_exists($configFile)) {
-    http_response_code(500);
-    exit('config.php fehlt, bitte config.sample.php nach config.php kopieren und anpassen.');
-}
-$GLOBALS['config'] = require $configFile;
+$GLOBALS['config'] = require file_exists($configFile) ? $configFile : __DIR__ . '/../config.sample.php';
 
 date_default_timezone_set(config('timezone') ?? 'Europe/Berlin');
 
@@ -56,6 +53,7 @@ function db(): PDO
 {
     static $pdo = null;
     if ($pdo === null) {
+        $isNew = !file_exists(config('db_path'));
         $pdo = new PDO('sqlite:' . config('db_path'));
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -77,14 +75,46 @@ function db(): PDO
             email TEXT NOT NULL,
             phone TEXT NOT NULL DEFAULT \'\',
             message TEXT NOT NULL DEFAULT \'\',
-            status TEXT NOT NULL DEFAULT "pending",
+            status TEXT NOT NULL DEFAULT \'pending\',
             admin_token TEXT NOT NULL UNIQUE,
             customer_token TEXT NOT NULL UNIQUE,
             created_at TEXT NOT NULL,
             decided_at TEXT
         )');
+        // Im Demo-Modus landen E-Mails hier statt im Postfach
+        $pdo->exec('CREATE TABLE IF NOT EXISTS demo_mails (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            recipient TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            body TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )');
+        if ($isNew && is_demo()) {
+            seed_demo_trainings($pdo);
+        }
     }
     return $pdo;
+}
+
+function is_demo(): bool
+{
+    return (bool)config('demo');
+}
+
+// Beispieltermine für eine frische Demo-Datenbank, relativ zum heutigen Datum
+function seed_demo_trainings(PDO $pdo): void
+{
+    $demo = [
+        [2, '18:00', 'Personal Training, Krafttraining', 'Technik und Kraft in den Grundübungen: Kniebeuge, Bankdrücken, Kreuzheben.', 'Studio Handler Fit', 60, 1],
+        [3, '07:30', 'Bauch-Beine-Po Workout', 'Intensives Ganzkörper-Workout in der Kleingruppe mit Fokus auf Core, Beine und Po.', 'Studio Handler Fit', 45, 6],
+        [5, '19:00', 'Online Coaching, Kennenlern-Call', 'Unverbindliches Erstgespräch per Video: Ziele, Alltag und Trainingserfahrung.', 'Online (Zoom)', 30, 1],
+        [7, '17:00', 'Hypertrophie Training', 'Muskelaufbau mit optimalem Trainingsvolumen und sauberer Technik.', 'Studio Handler Fit', 75, 2],
+    ];
+    $insert = $pdo->prepare('INSERT INTO trainings (title, description, location, starts_at, duration_min, capacity, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    foreach ($demo as [$days, $time, $title, $desc, $location, $duration, $capacity]) {
+        $startsAt = date('Y-m-d', strtotime("+$days days")) . ' ' . $time;
+        $insert->execute([$title, $desc, $location, $startsAt, $duration, $capacity, date('Y-m-d H:i:s')]);
+    }
 }
 
 function csrf_token(): string

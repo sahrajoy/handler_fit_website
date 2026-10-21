@@ -1,0 +1,6 @@
+.git
+.idea
+vendor
+config.php
+db/*.sqlite
+db/*.log

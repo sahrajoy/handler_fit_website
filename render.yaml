@@ -1,0 +1,11 @@
+# Render Blueprint: legt die Demo-Version als kostenlosen Web Service an
+services:
+  - type: web
+    name: handlerfit
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DEMO_MODE
+        value: "1"
+      - key: ADMIN_PASSWORD
+        value: demo

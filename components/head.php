@@ -23,5 +23,11 @@ $description ??= 'Handler Fit, Online Coaching und Personal Training: individuel
     <link rel="stylesheet" href="<?= $loc ?>css/main.css">
 </head>
 <body>
+<?php if (is_demo()): ?>
+    <div class="demo-banner">
+        <strong>Demo-Version</strong> · Es werden keine echten E-Mails verschickt, bitte keine echten Daten eingeben.
+        Alle E-Mails und die Terminverwaltung siehst du im <a href="<?= $loc ?>admin/index.php">Adminbereich</a>.
+    </div>
+<?php endif; ?>
 <?php require __DIR__ . '/navbar.php'; ?>
 <main>
